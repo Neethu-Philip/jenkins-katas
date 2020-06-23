@@ -17,7 +17,9 @@ pipeline {
 
           }
           steps {
-            sh './ ci/buildapp.sh'
+            sh '''echo "HI"
+sudo su -
+./ ci/build-app.sh'''
           }
         }
 
