@@ -17,7 +17,10 @@ pipeline {
 
           }
           steps {
-            sh '''sh ci/build-app.sh
+            sh '''sh label: \'\', script: \'\'\'#! /usr/bin/sh
+sh ci/build-app.sh
+ls
+echo $(ls)\'\'\'
 '''
             archiveArtifacts(artifacts: 'app/build/libs', allowEmptyArchive: true)
           }
