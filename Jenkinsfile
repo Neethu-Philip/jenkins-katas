@@ -19,7 +19,7 @@ pipeline {
           steps {
             sh '''sh ci/build-app.sh
 '''
-            archiveArtifacts(artifacts: '/app/build/libs', allowEmptyArchive: true)
+            archiveArtifacts(artifacts: 'app/builds/libs', allowEmptyArchive: true)
           }
         }
 
