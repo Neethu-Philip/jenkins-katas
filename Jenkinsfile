@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'host'
+    }
+
+  }
   stages {
     stage('Say Hello') {
       parallel {
@@ -23,6 +28,12 @@ ls
 echo $(ls)\'\'\'
 '''
             archiveArtifacts(artifacts: 'app/build/libs', allowEmptyArchive: true)
+          }
+        }
+
+        stage('clone') {
+          steps {
+            stash(name: 'code', excludes: '.git')
           }
         }
 
