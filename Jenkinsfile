@@ -6,34 +6,24 @@ pipeline {
 
   }
   stages {
-    stage('Say Hello') {
+    stage('clone') {
+      steps {
+        stash(name: 'code', excludes: '.git')
+      }
+    }
+
+    stage('build app') {
       parallel {
-        stage('Say Hello') {
+        stage('build app') {
           steps {
-            sh 'echo "Hello From Neethu"'
+            unstash 'code'
+            sh 'sh ci/buid-app.sh'
           }
         }
 
-        stage('Build gradle app') {
-          agent {
-            docker {
-              image 'gradle:jdk11'
-            }
-
-          }
+        stage('say hello') {
           steps {
-            sh '''sh label: \'\', script: \'\'\'#! /usr/bin/sh
-sh ci/build-app.sh
-ls
-echo $(ls)\'\'\'
-'''
-            archiveArtifacts(artifacts: 'app/build/libs', allowEmptyArchive: true)
-          }
-        }
-
-        stage('clone') {
-          steps {
-            stash(name: 'code', excludes: '.git')
+            sh 'sh \'echo "Hello from Neethu"\''
           }
         }
 
